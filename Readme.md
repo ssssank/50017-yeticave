@@ -1,7 +1,7 @@
 # Личный проект «YetiCave» 
 
 * Студент: [Александр Литвинов](https://up.htmlacademy.ru/php/1/user/50017).
-* Наставник: `Александр Борисов`.
+* Наставник: [Александр Борисов](https://htmlacademy.ru/profile/dmnbars).
 
 ---
 
