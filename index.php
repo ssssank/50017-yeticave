@@ -12,7 +12,9 @@ $tomorrow = strtotime('tomorrow midnight');
 $now = time();
 
 // далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-// ...
+$lot_time_remaining_hours = intval(($tomorrow - $now) / 3600);
+$lot_time_remaining_minutes = floor((($tomorrow - $now) - (3600 * $lot_time_remaining_hours)) / 60);
+$lot_time_remaining = "$lot_time_remaining_hours".":".str_pad($lot_time_remaining_minutes, 2, '0', STR_PAD_LEFT);
 ?>
 <!DOCTYPE html>
 <html lang="ru">
