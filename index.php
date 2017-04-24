@@ -17,7 +17,7 @@ $lot_time_remaining_minutes = floor((($tomorrow - $now) - (3600 * $lot_time_rema
 $lot_time_remaining = "$lot_time_remaining_hours".":".str_pad($lot_time_remaining_minutes, 2, '0', STR_PAD_LEFT);
 
 //Массив категорий товаров
-$category = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
 
 //Массив объявлений
 $goods = [
@@ -124,6 +124,9 @@ $goods = [
             <h2>Открытые лоты</h2>
             <select class="lots__select">
                 <option>Все категории</option>
+                <?php foreach ($categories as $category) : ?>
+                    <option><?=$category ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <ul class="lots__list">
