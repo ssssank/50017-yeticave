@@ -7,6 +7,21 @@ $bets = [
     ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
+
+function humanTime ($time) {
+    $leftTime = time() - $time;
+    $day = 24 * 60 * 60;
+    $hour = 60 * 60;
+
+    if ($leftTime < $hour)
+        $time = gmdate("i", $leftTime). " минут назад";
+    elseif ($leftTime < $day)
+        $time = gmdate("H", $leftTime). " часов назад";
+    else
+        $time = gmdate("d.m.y в H:i", $time);
+
+    return $time;
+}
 ?>
 
 <!DOCTYPE html>
@@ -114,7 +129,7 @@ $bets = [
                             <tr class="history__item">
                                 <td class="history__name"><?=$bet['name'];?></td>
                                 <td class="history__price"><?=$bet['price'];?> р</td>
-                                <td class="history__time"><?=date("Y-m-d H:i", $bet['ts']);?></td>
+                                <td class="history__time"><?=humanTime($bet['ts']);?></td>
                             </tr>
                         </table>
                     <?php endforeach; ?>
