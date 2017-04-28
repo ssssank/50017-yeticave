@@ -8,17 +8,19 @@ $bets = [
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
 
-function humanTime ($time) {
+function humanTime($time)
+{
     $leftTime = time() - $time;
     $day = 24 * 60 * 60;
     $hour = 60 * 60;
 
-    if ($leftTime < $hour)
-        $time = gmdate("i", $leftTime). " минут назад";
-    elseif ($leftTime < $day)
-        $time = gmdate("H", $leftTime). " часов назад";
-    else
+    if ($leftTime < $hour) {
+        $time = gmdate("i", $leftTime) . " минут назад";
+    } elseif ($leftTime < $day) {
+        $time = gmdate("G", $leftTime) . " часов назад";
+    } else {
         $time = gmdate("d.m.y в H:i", $time);
+    }
 
     return $time;
 }
