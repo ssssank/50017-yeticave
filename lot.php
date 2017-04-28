@@ -15,7 +15,7 @@ function humanTime($time)
     $hour = 60 * 60;
 
     if ($leftTime < $hour) {
-        $time = gmdate("i", $leftTime) . " минут назад";
+        $time = intval(gmdate("i", $leftTime)) . " минут назад";
     } elseif ($leftTime < $day) {
         $time = gmdate("G", $leftTime) . " часов назад";
     } else {
