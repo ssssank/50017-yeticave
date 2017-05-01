@@ -18,7 +18,7 @@ require_once 'alldata.php';
 
     <?php
     print makeTemplate('templates/header.php', []);
-    print makeTemplate('templates/main-index.php', ['categories' => $categories, 'goods' => $goods, 'lot_time_remaining' => $lot_time_remaining]);
+    print makeTemplate('templates/main-index.php', ['categories' => $categories, 'goods' => $goods, 'lot_time_remaining' => remainToMidnight()]);
     print makeTemplate('templates/footer.php', []);
     ?>
 

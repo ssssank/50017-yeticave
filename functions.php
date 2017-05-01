@@ -29,19 +29,15 @@ function humanTime($time)
     return $time;
 }
 
-// устанавливаем часовой пояс в Московское время
-date_default_timezone_set('Europe/Moscow');
+function remainToMidnight()
+{
+    date_default_timezone_set('Europe/Moscow');
+    $tomorrow = strtotime('tomorrow midnight');
+    $now = time();
 
-// записать в эту переменную оставшееся время в этом формате (ЧЧ:ММ)
-$lot_time_remaining = "00:00";
+    $remaining_hours = intval(($tomorrow - $now) / 3600);
+    $remaining_minutes = floor((($tomorrow - $now) - (3600 * $remaining_hours)) / 60);
+    $time_remaining = "$remaining_hours".":".str_pad($remaining_minutes, 2, '0', STR_PAD_LEFT);
 
-// временная метка для полночи следующего дня
-$tomorrow = strtotime('tomorrow midnight');
-
-// временная метка для настоящего времени
-$now = time();
-
-// далее нужно вычислить оставшееся время до начала следующих суток и записать его в переменную $lot_time_remaining
-$lot_time_remaining_hours = intval(($tomorrow - $now) / 3600);
-$lot_time_remaining_minutes = floor((($tomorrow - $now) - (3600 * $lot_time_remaining_hours)) / 60);
-$lot_time_remaining = "$lot_time_remaining_hours".":".str_pad($lot_time_remaining_minutes, 2, '0', STR_PAD_LEFT);
+    return $time_remaining;
+}
