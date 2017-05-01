@@ -9,7 +9,7 @@ require_once 'alldata.php';
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>DC Ply Mens 2016/2017 Snowboard</title>
+    <title><?=$goods[$_GET['id']]['name'] ; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -17,7 +17,7 @@ require_once 'alldata.php';
 
 <?php
 
-if (isset($_GET['id'])) {
+if (!isset($goods[$_GET['id']])) {
     header("HTTP/1.1 404 Not Found");
 } else {
     print makeTemplate('templates/header.php', []);
