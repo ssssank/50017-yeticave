@@ -16,14 +16,15 @@ require_once 'alldata.php';
 <body>
 
 <?php
-
+print makeTemplate('templates/header.php', []);
 if (!isset($goods[$_GET['id']])) {
     header("HTTP/1.1 404 Not Found");
+    print '<h1>Ошибка 404</h1>';
+    print '<h2>Лот не найден!</h2>';
 } else {
-    print makeTemplate('templates/header.php', []);
     print makeTemplate('templates/main-lot.php', ['bets' => $bets, 'good' => $goods[$_GET['id']]]);
-    print makeTemplate('templates/footer.php', []);
 }
+print makeTemplate('templates/footer.php', []);
 ?>
 
 </body>
