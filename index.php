@@ -75,7 +75,7 @@ $goods = [
 
     <?php
     print makeTemplate('templates/header.php', []);
-    print makeTemplate('templates/main.php', ['categories' => $categories, 'goods' => $goods, 'lot_time_remaining' => $lot_time_remaining]);
+    print makeTemplate('templates/main-index.php', ['categories' => $categories, 'goods' => $goods, 'lot_time_remaining' => $lot_time_remaining]);
     print makeTemplate('templates/footer.php', []);
     ?>
 
