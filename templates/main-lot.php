@@ -63,7 +63,7 @@
                     </form>
                 </div>
                 <div class="history">
-                    <h3>История ставок (<span>4</span>)</h3>
+                    <h3>История ставок (<span><?=count($templateData['bets']) ?></span>)</h3>
                     <?php foreach ($templateData['bets'] as $bet) : ?>
                         <table class="history__list">
                             <tr class="history__item">
