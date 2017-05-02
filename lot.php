@@ -3,11 +3,10 @@
 require_once 'functions.php';
 require_once 'alldata.php';
 $page404 = false;
-if (!isset($goods[$_GET['id']])) {
+$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+if (!isset($goods[$id])) {
     $page404 = true;
     header("HTTP/1.1 404 Not Found");
-
-} else {
 }
 
 ?>
@@ -16,7 +15,7 @@ if (!isset($goods[$_GET['id']])) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?php (($page404)) ? print ('404') : $goods[$_GET['id']]['name']; ?></title>
+    <title><?php (($page404)) ? print ('404') : print ($goods[$_GET['$id']]['name']); ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
