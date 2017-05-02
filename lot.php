@@ -22,15 +22,11 @@ if (!isset($goods[$id])) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-
-<?php
-if (!($page404)) {
-    print makeTemplate('templates/main-lot.php', ['bets' => $bets, 'good' => $goods[$_GET['id']]]);
-} else {
-    print makeTemplate('templates/page404.php', []);
-}
-?>
-
+<?php if (!($page404)) : ?>
+    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'good' => $goods[$id]]); ?>
+<?php else : ?>
+    <?=makeTemplate('templates/page404.php', []); ?>
+<?php endif; ?>
 <?=makeTemplate('templates/footer.php', []); ?>
 
 </body>

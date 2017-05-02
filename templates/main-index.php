@@ -48,7 +48,7 @@
                                 <span class="lot__cost"><?=htmlspecialchars($val['price']); ?><b class="rub">р</b></span>
                             </div>
                             <div class="lot__timer timer">
-                                <?=$templateData['lot_time_remaining'];?>
+                                <?=$templateData['lot_time_remaining']; ?>
                             </div>
                         </div>
                     </div>
