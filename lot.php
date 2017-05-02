@@ -15,7 +15,7 @@ if (!isset($goods[$id])) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?php (($page404)) ? print ('404') : print ($goods[$_GET['$id']]['name']); ?></title>
+    <title><?= $page404 ? '404' : $goods[$id]['name']; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
