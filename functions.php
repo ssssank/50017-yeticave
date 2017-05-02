@@ -29,10 +29,10 @@ function humanTime($time)
     return $time;
 }
 
-function remainToMidnight()
+function remainTime($time)
 {
     date_default_timezone_set('Europe/Moscow');
-    $tomorrow = strtotime('tomorrow midnight');
+    $tomorrow = strtotime($time);
     $now = time();
 
     $remaining_hours = intval(($tomorrow - $now) / 3600);
