@@ -32,14 +32,12 @@
             <div class="form__item <?=!empty($templateData['errors']['category']) ? 'form__item--invalid' : ''; ?>">
                 <label for="category">Категория</label>
                 <select id="category" name="category" required>
-                    <option></option>
-                    <option>Выберите категорию</option>
-                    <option>Доски и лыжи</option>
-                    <option>Крепления</option>
-                    <option>Ботинки</option>
-                    <option>Одежда</option>
-                    <option>Инструменты</option>
-                    <option>Разное</option>
+                    <option value="">Выберите категорию</option>
+                    <?php foreach ($templateData['categories'] as $category) : ?>
+                    <option <?= isset($templateData['lot']['category']) && $templateData['lot']['category'] == $category ? 'selected' : '' ;?>>
+                        <?=$category; ?>
+                    </option>
+                    <?php endforeach; ?>
                 </select>
                 <span class="form__error"><?=!empty($templateData['errors']['category']) ? $templateData['errors']['category'] : ''; ?></span>
             </div>
@@ -49,12 +47,12 @@
             <textarea id="message" name="message" placeholder="Напишите описание лота" ><?=isset($templateData['lot']['message']) ? $templateData['lot']['message'] : ''; ?></textarea>
             <span class="form__error"><?=$templateData['errors']['message']; ?></span>
         </div>
-        <div class="form__item form__item--file ">
+        <div class="form__item form__item--file <?=!empty($templateData['lot']['lot-img']) ? 'form__item--uploaded' : ''; ?> <?=!empty($templateData['errors']['lot-img']) ? 'form__item--invalid' : ''; ?>">
             <label>Изображение</label>
             <div class="preview">
                 <button class="preview__remove" type="button">x</button>
                 <div class="preview__img">
-                    <img src="../<?=isset($templateData['lot']['lot-img']) ? $templateData['lot']['lot-img'] : ''; ?>" width="113" height="113" alt="Изображение лота">
+                    <img src="<?=!empty($templateData['lot']['lot-img']) ? $templateData['lot']['lot-img'] : ''; ?>" width="113" height="113" alt="Изображение лота">
                 </div>
             </div>
             <div class="form__input-file">
@@ -63,6 +61,7 @@
                     <span>+ Добавить</span>
                 </label>
             </div>
+            <span class="form__error"><?=!empty($templateData['errors']['lot-img']) ? $templateData['errors']['lot-img'] : ''; ?></span>
         </div>
         <div class="form__container-three">
             <div class="form__item form__item--small <?=!empty($templateData['errors']['lot-rate']) ? 'form__item--invalid' : ''; ?>">

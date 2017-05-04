@@ -50,7 +50,7 @@ if (isset($_FILES['lot-img'])) {
 
 <?php if (empty($_POST) or !empty($errors)) : ?>
 
-    <?=makeTemplate('templates/main-add.php', ['errors' => $errors, 'lot' => $lot]); ?>
+    <?=makeTemplate('templates/main-add.php', ['errors' => $errors, 'lot' => $lot, 'categories' => $categories]); ?>
 
 <?php else : ?>
     <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lot]); ?>

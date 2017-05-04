@@ -37,7 +37,7 @@
             <?php foreach ($templateData['lot'] as $key => $val) : ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
-                        <img src="<?=htmlspecialchars($val['lot-img']); ?>.jpg" width="350" height="260" alt="Сноуборд">
+                        <img src="<?=htmlspecialchars($val['lot-img']); ?>" width="350" height="260" alt="<?=htmlspecialchars($val['lot-name']); ?>">
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?=htmlspecialchars($val['category']); ?></span>
