@@ -11,26 +11,13 @@ if (isset($_POST)) {
         $lot[$name] = htmlspecialchars($value);
         if (empty($value)) {
             $errors[$name] = "Поле должно быть заполнено";
+            continue;
         }
-        if (in_array($name, ['lot-rate', 'lot-step'])) {
-            if (!is_numeric($value)) {
-                if (empty($errors[$name])) {
-                    $errors[$name] = 'Поле должно содержать число';
-                }
-            } else {
-                $lot[$name] = intval($_POST[$name]);
-            }
+        if (in_array($name, ['lot-rate', 'lot-step']) && !is_numeric($value)) {
+            $errors[$name] = 'Поле должно содержать число';
         }
-        if (in_array($name, ['lot-date'])) {
-            if (!is_numeric(strtotime($value))) {
-                $errors[$name] = 'Поле должно содержать дату';
-
-            }
-        }
-        if (in_array($name, ['category'])) {
-            if (($value == "Выберите категорию")) {
-                $errors[$name] = 'Категория должна быть выбрана';
-            }
+        if (in_array($name, ['lot-date']) && !is_numeric(strtotime($value))) {
+            $errors[$name] = 'Поле должно содержать дату';
         }
     }
 }
@@ -66,7 +53,7 @@ if (isset($_FILES['lot-img'])) {
     <?=makeTemplate('templates/main-add.php', ['errors' => $errors, 'lot' => $lot]); ?>
 
 <?php else : ?>
-    <?=makeTemplate('templates/main-new_lot.php', ['bets' => $bets, 'lot' => $lot]); ?>
+    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lot]); ?>
 
 <?php endif; ?>
 
