@@ -23,7 +23,7 @@ if (!empty($_POST)) {
         if (password_verify($user['password'], $userFound['password'])) {
             $_SESSION['user'] = $userFound;
 
-            header("Location: index.php");
+            header("Location: /");
         } else {
             $errors['password'] = "Неверный пароль";
         }
