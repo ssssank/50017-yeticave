@@ -4,6 +4,18 @@ require_once 'functions.php';
 require_once 'alldata.php';
 require_once 'userdata.php';
 
+$errors = [];
+$user = [];
+
+if (isset($_POST)) {
+    foreach ($_POST as $field => $value) {
+        $user[$field] = htmlspecialchars($value);
+        if (empty($value)) {
+            $errors[$field] = "Поле должно быть заполнено";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +29,7 @@ require_once 'userdata.php';
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-login.php', []); ?>
+<?=makeTemplate('templates/main-login.php', ['errors' => $errors, 'user' => $user]); ?>
 <?=makeTemplate('templates/footer.php', []);  ?>
 
 </body>

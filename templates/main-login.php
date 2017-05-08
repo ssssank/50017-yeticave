@@ -21,16 +21,16 @@
             </li>
         </ul>
     </nav>
-    <form class="form container" action="https://echo.htmlacademy.ru" method="post"> <!-- form--invalid -->
+    <form class="form container <?=!empty($templateData['errors']) ? 'form--invalid' : ''; ?>" action="login.php" method="post">
         <h2>Вход</h2>
-        <div class="form__item"> <!-- form__item--invalid -->
+        <div class="form__item <?=!empty($templateData['errors']['email']) ? 'form__item--invalid' : ''; ?>">
             <label for="email">E-mail*</label>
-            <input id="email" type="text" name="email" placeholder="Введите e-mail" required>
+            <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=isset($templateData['user']['email']) ? $templateData['user']['email'] : ''; ?>">
             <span class="form__error">Введите e-mail</span>
         </div>
-        <div class="form__item form__item--last">
+        <div class="form__item form__item--last <?=!empty($templateData['errors']['password']) ? 'form__item--invalid' : ''; ?>">
             <label for="password">Пароль*</label>
-            <input id="password" type="text" name="password" placeholder="Введите пароль" required>
+            <input id="password" type="text" name="password" placeholder="Введите пароль" >
             <span class="form__error">Введите пароль</span>
         </div>
         <button type="submit" class="button">Войти</button>
