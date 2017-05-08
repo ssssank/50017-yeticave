@@ -6,7 +6,7 @@ require_once 'functions.php';
 require_once 'alldata.php';
 $page404 = false;
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
-if (!isset($lot[$id])) {
+if (!isset($lots[$id])) {
     $page404 = true;
     header("HTTP/1.1 404 Not Found");
 }
@@ -17,7 +17,7 @@ if (!isset($lot[$id])) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= $page404 ? '404' : $goods[$id]['name']; ?></title>
+    <title><?= $page404 ? '404' : $lots[$id]['lot-name']; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -25,7 +25,7 @@ if (!isset($lot[$id])) {
 
 <?=makeTemplate('templates/header.php', []); ?>
 <?php if (!($page404)) : ?>
-    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lot[$id]]); ?>
+    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lots[$id]]); ?>
 <?php else : ?>
     <?=makeTemplate('templates/page404.php', []); ?>
 <?php endif; ?>
