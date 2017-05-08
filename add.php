@@ -34,6 +34,10 @@ if (isset($_FILES['lot-img'])) {
     }
 }
 
+if (!(isset($_SESSION['user']))) {
+    header("HTTP/1.1 403 Forbidden");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +52,14 @@ if (isset($_FILES['lot-img'])) {
 
 <?=makeTemplate('templates/header.php', []); ?>
 
-<?php if (empty($_POST) or !empty($errors)) : ?>
+<?php if (!(isset($_SESSION['user']))) : ?>
+
+    <?=makeTemplate('templates/page403.php', []); ?>
+
+<?php elseif (empty($_POST) or !empty($errors)) : ?>
 
     <?=makeTemplate('templates/main-add.php', ['errors' => $errors, 'lot' => $lot, 'categories' => $categories]); ?>
+
 
 <?php else : ?>
     <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lot]); ?>
