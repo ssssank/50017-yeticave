@@ -46,12 +46,13 @@
                             Мин. ставка <span><?=$templateData['lot']['lot-step']; ?> р</span>
                         </div>
                     </div>
-                    <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
-                        <p class="lot-item__form-item">
+                    <form class="lot-item__form <?=!empty($templateData['errors']) ? 'form--invalid' : ''; ?>" action="<?=$_SERVER['REQUEST_URI']; ?>" method="post">
+                        <p class="lot-item__form-item <?=!empty($templateData['errors']['cost']) ? 'form__item--invalid' : ''; ?>">
                             <label for="cost">Ваша ставка</label>
-                            <input id="cost" type="number" name="cost" placeholder="12 000">
+                            <input id="cost" type="number" name="cost" placeholder="12 000" value="<?=isset($templateData['lot']['cost']) ? $templateData['lot']['cost'] : ''; ?>">
                         </p>
                         <button type="submit" class="button">Сделать ставку</button>
+                        <span class="form__error"><?=!empty($templateData['errors']['cost']) ? $templateData['errors']['cost'] : ''; ?></span>
                     </form>
                 </div>
                 <?php endif; ?>

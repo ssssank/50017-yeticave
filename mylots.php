@@ -5,6 +5,13 @@ session_start();
 require_once 'functions.php';
 require_once 'alldata.php';
 
+$myBets = [];
+
+if (!empty($_COOKIE['bets'])) {
+    $myBets = json_decode($_COOKIE['bets'], true);
+    var_dump($myBets);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,7 +24,7 @@ require_once 'alldata.php';
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-mylots.php', []); ?>
+<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets]); ?>
 <?=makeTemplate('templates/footer.php', []);  ?>
 
 
