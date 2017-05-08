@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <header class="main-header">
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
@@ -11,13 +17,20 @@
         <a class="main-header__add-lot button" href="add.php">Добавить лот</a>
 
         <nav class="user-menu">
-            <div class="user-menu__image">
-                <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
-            </div>
-            <div class="user-menu__logged">
-                <p>Константин</p>
-                <a href="#">Выйти</a>
-            </div>
+            <?php if (!isset($_SESSION['user'])) : ?>
+                <div>
+                    <a href="#">Регистрация</a>
+                    <a href="login.php">Вход</a>
+                </div>
+            <?php else : ?>
+                <div class="user-menu__image">
+                    <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
+                </div>
+                <div class="user-menu__logged">
+                    <p><?=strip_tags($_SESSION['user']['name']); ?></p>
+                    <a href="#">Выйти</a>
+                </div>
+            <?php endif; ?>
         </nav>
     </div>
 </header>
