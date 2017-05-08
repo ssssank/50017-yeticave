@@ -1,10 +1,16 @@
 <?php
 
+session_start();
+
 require_once 'functions.php';
 require_once 'alldata.php';
 
 $lot = [];
 $errors = [];
+
+if (!(isset($_SESSION['user']))) {
+    header("HTTP/1.1 403 Forbidden");
+}
 
 if (isset($_POST)) {
     foreach ($_POST as $name => $value) {
@@ -48,9 +54,14 @@ if (isset($_FILES['lot-img'])) {
 
 <?=makeTemplate('templates/header.php', []); ?>
 
-<?php if (empty($_POST) or !empty($errors)) : ?>
+<?php if (!(isset($_SESSION['user']))) : ?>
+
+    <?=makeTemplate('templates/page403.php', []); ?>
+
+<?php elseif (empty($_POST) or !empty($errors)) : ?>
 
     <?=makeTemplate('templates/main-add.php', ['errors' => $errors, 'lot' => $lot, 'categories' => $categories]); ?>
+
 
 <?php else : ?>
     <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lot]); ?>

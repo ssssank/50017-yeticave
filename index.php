@@ -1,9 +1,9 @@
 <?php
 
+session_start();
+
 require_once 'functions.php';
 require_once 'alldata.php';
-
-
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ require_once 'alldata.php';
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-index.php', ['categories' => $categories, 'lot' => $lot, 'lot_time_remaining' => remainTime('tomorrow midnight')]); ?>
+<?=makeTemplate('templates/main-index.php', ['categories' => $categories, 'lot' => $lots, 'lot_time_remaining' => remainTime('tomorrow midnight')]); ?>
 <?=makeTemplate('templates/footer.php', []);  ?>
 
 </body>
