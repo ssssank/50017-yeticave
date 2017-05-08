@@ -1,10 +1,16 @@
 <?php
 
+session_start();
+
 require_once 'functions.php';
 require_once 'alldata.php';
 
 $lot = [];
 $errors = [];
+
+if (!(isset($_SESSION['user']))) {
+    header("HTTP/1.1 403 Forbidden");
+}
 
 if (isset($_POST)) {
     foreach ($_POST as $name => $value) {
@@ -32,10 +38,6 @@ if (isset($_FILES['lot-img'])) {
             $errors['lot-img'] = 'Фото должно быть в формате jpeg';
         }
     }
-}
-
-if (!(isset($_SESSION['user']))) {
-    header("HTTP/1.1 403 Forbidden");
 }
 
 ?>
