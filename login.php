@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once 'functions.php';
 require_once 'alldata.php';
 require_once 'userdata.php';
@@ -13,6 +15,20 @@ if (isset($_POST)) {
         if (empty($value)) {
             $errors[$field] = "Поле должно быть заполнено";
         }
+    }
+}
+
+if (!empty($_POST)) {
+    if ($userFound = searchUserByEmail($user['email'], $users)) {
+        if (password_verify($user['password'], $userFound['password'])) {
+            $_SESSION['user'] = $userFound;
+
+            header("Location: index.php");
+        } else {
+            $errors['password'] = "Неверный пароль";
+        }
+    } else {
+        $errors['email'] = 'Пользователь не найден';
     }
 }
 
