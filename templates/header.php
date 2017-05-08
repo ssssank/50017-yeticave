@@ -18,17 +18,21 @@ session_start();
 
         <nav class="user-menu">
             <?php if (!isset($_SESSION['user'])) : ?>
-                <div>
-                    <a href="#">Регистрация</a>
-                    <a href="login.php">Вход</a>
-                </div>
+                <ul class="user-menu__list">
+                    <li class="user-menu__item">
+                        <a href="#">Регистрация</a>
+                    </li>
+                    <li class="user-menu__item">
+                        <a href="login.php">Вход</a>
+                    </li>
+                </ul>
             <?php else : ?>
                 <div class="user-menu__image">
                     <img src="img/user.jpg" width="40" height="40" alt="Пользователь">
                 </div>
                 <div class="user-menu__logged">
                     <p><?=strip_tags($_SESSION['user']['name']); ?></p>
-                    <a href="#">Выйти</a>
+                    <a href="logout.php">Выйти</a>
                 </div>
             <?php endif; ?>
         </nav>
