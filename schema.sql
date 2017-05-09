@@ -28,7 +28,7 @@ CREATE INDEX lot_name ON lots(name);
 
 CREATE TABLE bets (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	make_date DATETIME,
+	create_date DATETIME,
 	price INT
 	
 	user_id INT,
@@ -46,4 +46,3 @@ CREATE TABLE users (
 );
 
 CREATE UNIQUE INDEX email ON users(email);
-CREATE INDEX user_name ON users(name);
