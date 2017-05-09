@@ -13,8 +13,8 @@ ORDER BY lots.create_date DESC;
 
 /*найти лот по его названию или описанию;*/
 SELECT * FROM lots
-WHERE name LIKE %snowboard#
-OR description LIKE %snowboard%;
+WHERE name LIKE '%snowboard%'
+OR description LIKE '%snowboard%';
 
 /*добавить новый лот (все данные из формы добавления);*/
 INSERT INTO lots (
@@ -45,7 +45,7 @@ VALUES (
 );
 
 /*обновить название лота по его идентификатору;*/
-UPDATE lot SET name = '$description' WHERE id = '$lot_id';
+UPDATE lot SET name = 'Snowboard 2017' WHERE id = 2;
 
 /*добавить новую ставку для лота;*/
 INSERT INTO bets (
