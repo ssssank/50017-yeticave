@@ -7,13 +7,14 @@ SELECT lots.name, start_bet, image, COUNT(bets.id), MAX(bets.price), category.na
 FROM lots
   JOIN categories ON categories.id = category_id
   JOIN bets ON lots.id = lot_id
-WHERE winner_id = NULL
-GROUP BY lots.id;
+WHERE finish_date > NOW()
+GROUP BY lots.id
+ORDER BY lots.create_date DESC;
 
 /*найти лот по его названию или описанию;*/
 SELECT * FROM lots
-WHERE name LIKE %$name#
-OR description LIKE %$description%;
+WHERE name LIKE %snowboard#
+OR description LIKE %snowboard%;
 
 /*добавить новый лот (все данные из формы добавления);*/
 INSERT INTO lots (
@@ -35,12 +36,12 @@ VALUES (
   NOW(),
   DATE_ADD(NOW(), INTERVAL 30 DAY),
   '/img/lot1.jpg',
-  '10000',
-  '500',
-  '0',
-  '1',
-  '',
-  '1'
+  10000,
+  500,
+  0,
+  1,
+  NULL,
+  1
 );
 
 /*обновить название лота по его идентификатору;*/
@@ -55,10 +56,10 @@ INSERT INTO bets (
 )
 VALUES (
   NOW(),
-  '10500',
-  '1',
-  '1'
+  10500,
+  1,
+  1
 );
 
 /*получить список ставок для лота по его идентификатору.*/
-SELECT * FROM bets WHERE lot_id = '$lot_id';
+SELECT * FROM bets WHERE lot_id = 5;
