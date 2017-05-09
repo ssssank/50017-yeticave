@@ -29,7 +29,7 @@
                 <tr class="rates__item">
                     <td class="rates__info">
                         <div class="rates__img">
-                            <img src="../img/rate<?=$bet['lot_id'] + 1; ?>.jpg" width="54" height="40" alt="Сноуборд">
+                            <img src="<?=$templateData['lots'][$lot_id]['lot-img']; ?>" width="54" height="40" alt="Сноуборд">
                         </div>
                         <h3 class="rates__title">
                             <a href="<?='lot.php?id=' . $bet['lot_id']; ?>">
