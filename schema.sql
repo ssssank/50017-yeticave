@@ -29,8 +29,7 @@ CREATE INDEX lot_name ON lots(name);
 CREATE TABLE bets (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	create_date DATETIME,
-	price INT
-	
+	price INT,
 	user_id INT,
 	lot_id INT
 );
