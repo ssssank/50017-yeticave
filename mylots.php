@@ -9,7 +9,6 @@ $myBets = [];
 
 if (!empty($_COOKIE['bets'])) {
     $myBets = json_decode($_COOKIE['bets'], true);
-    var_dump($myBets);
 }
 
 ?>
@@ -24,7 +23,7 @@ if (!empty($_COOKIE['bets'])) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets]); ?>
+<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets, 'lots' => $lots]); ?>
 <?=makeTemplate('templates/footer.php', []);  ?>
 
 

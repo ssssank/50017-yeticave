@@ -6,25 +6,31 @@ require_once 'functions.php';
 require_once 'alldata.php';
 
 $page404 = false;
-$myBets = [];
+$readyBet = false;
 $errors = [];
-
+$myBets = [];
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-if (isset($_POST['cost'])) {
-    if (!empty($_POST['cost'])) {
-        if (is_numeric($_POST['cost'])) {
-            $myBets[] = ['id' => $id, 'cost' => $_POST['cost'], 'time' => time()];
+if (!empty($_COOKIE['bets'])) {
+    $myBets = json_decode($_COOKIE['bets'], true);
+}
 
-            $myBets = json_encode($myBets);
-            setcookie('bets', $myBets, strtotime("+30 days"), "/");
-            header("Location: /mylots.php");
-            exit();
-        } else {
-            $errors['cost'] = "Поле заполнено неправильно";
-        }
+if (!empty($_POST['cost'])) {
+    if (is_numeric($_POST['cost'])) {
+        $myBets[] = ['lot_id' => $id, 'cost' => $_POST['cost'], 'time' => time()];
+
+        $myBets = json_encode($myBets);
+        setcookie('bets', $myBets, strtotime("+30 days"), "/");
+        header("Location: /mylots.php");
+        exit();
     } else {
-        $errors['cost'] = "Поле не заполнено";
+        $errors['cost'] = "Поле заполнено неправильно";
+    }
+}
+
+foreach ($myBets as $myBet) {
+    if ($id == $myBet['lot_id']) {
+        $readyBet = true;
     }
 }
 
@@ -47,7 +53,7 @@ if (!isset($lots[$id])) {
 
 <?=makeTemplate('templates/header.php', []); ?>
 <?php if (!($page404)) : ?>
-    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lots[$id], 'errors' => $errors]); ?>
+    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lots[$id], 'errors' => $errors, 'readyBet' => $readyBet]); ?>
 <?php else : ?>
     <?=makeTemplate('templates/page404.php', []); ?>
 <?php endif; ?>
