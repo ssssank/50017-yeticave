@@ -1,4 +1,7 @@
 <?php
+
+include 'mysql_helper.php';
+
 function makeTemplate($templateFile, $templateData)
 {
 
@@ -52,4 +55,23 @@ function searchUserByEmail($email, $users)
         }
     }
     return $result;
+}
+
+function getData($connection, $sql, $sqlData)
+{
+    $resultData = [];
+
+    $stmt = db_get_prepare_stmt($connection, $sql, $sqlData);
+
+    if ($stmt) {
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result(($stmt));
+            while ($row = mysqli_fetch_array($result)) {
+                $resultData = $row;
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+
+    return $resultData;
 }
