@@ -75,3 +75,19 @@ function getData($connection, $sql, $sqlData)
 
     return $resultData;
 }
+
+function insertData($connection, $sql, $sqlData)
+{
+    $result = false;
+
+    $stmt = db_get_prepare_stmt($connection, $sql, $sqlData);
+
+    if ($stmt) {
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_insert_id($stmt);
+        }
+        mysqli_stmt_close($stmt);
+    }
+
+    return $result;
+}
