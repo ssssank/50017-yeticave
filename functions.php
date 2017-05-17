@@ -57,6 +57,12 @@ function searchUserByEmail($email, $users)
     return $result;
 }
 
+function dbConnection()
+{
+    $connection = mysqli_connect("localhost", "root", "", "yeticave");
+    return $connection;
+}
+
 function getData($connection, $sql, $sqlData)
 {
     $resultData = [];
