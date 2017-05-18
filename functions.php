@@ -72,8 +72,8 @@ function getData($connection, $sql, $sqlData)
     if ($stmt) {
         if (mysqli_stmt_execute($stmt)) {
             $result = mysqli_stmt_get_result(($stmt));
-            while ($row = mysqli_fetch_array($result)) {
-                $resultData = $row;
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                $resultData[] = $row;
             }
         }
         mysqli_stmt_close($stmt);
@@ -103,7 +103,8 @@ function updateData($connection, $tableName, $sqlData, $arrayWhere)
     $result = false;
     $fieldsForUpdate = [];
     $dataForUpdate = [];
-    $sql = "UPDATE " .$tableName. " SET";
+    $where = [];
+    $sql = "UPDATE " .$tableName. " SET ";
 
     foreach ($sqlData as $key => $value) {
         $fieldsForUpdate[] = $key."=?";
@@ -121,7 +122,7 @@ function updateData($connection, $tableName, $sqlData, $arrayWhere)
     $sql .= implode(' AND ', $where);
     $sql .= ";";
 
-    $stmt = db_get_prepare_stmt($connection, $sql, $sqlData);
+    $stmt = db_get_prepare_stmt($connection, $sql, $dataForUpdate);
 
     if ($stmt) {
         if (mysqli_stmt_execute($stmt)) {
