@@ -1,53 +1,40 @@
 <main>
     <nav class="nav">
         <ul class="nav__list container">
-            <li class="nav__item">
-                <a href="all-lots.html">Доски и лыжи</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Крепления</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Ботинки</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Одежда</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Инструменты</a>
-            </li>
-            <li class="nav__item">
-                <a href="all-lots.html">Разное</a>
-            </li>
+            <?php foreach ($templateData['categories'] as $category) : ?>
+                <li class="nav__item">
+                    <a href="all-lots.html"><?=htmlspecialchars($category['name']); ?></a>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </nav>
     <section class="rates container">
         <h2>Мои ставки</h2>
         <table class="rates__list">
             <?php foreach ($templateData['bets'] as $bet) : ?>
-                <?php $lot_id = $bet['lot_id']; ?>
+                <?php $lot_id = $bet['lot_id'] - 1; ?>
                 <tr class="rates__item">
                     <td class="rates__info">
                         <div class="rates__img">
-                            <img src="<?=$templateData['lots'][$lot_id]['lot-img']; ?>" width="54" height="40" alt="Сноуборд">
+                            <img src="<?=$templateData['lot'][$lot_id]['image']; ?>" width="54" height="40" alt="Сноуборд">
                         </div>
                         <h3 class="rates__title">
                             <a href="<?='lot.php?id=' . $bet['lot_id']; ?>">
-                                <?=$templateData['lots'][$lot_id]['lot-name']; ?>
+                                <?=$templateData['lot'][$lot_id]['name']; ?>
                             </a>
                         </h3>
                     </td>
                     <td class="rates__category">
-                        <?=$templateData['lots'][$lot_id]['category']; ?>
+                        <?=$templateData['lot'][$lot_id]['category']; ?>
                     </td>
                     <td class="rates__timer">
-                        <div class="timer timer--finishing">07:13:34</div>
+                        <div class="timer timer--finishing"><?=$templateData['lot'][$lot_id]['finish_date']; ?></div>
                     </td>
                     <td class="rates__price">
-                        <?=$bet['cost']; ?> р
+                        <?=$bet['price']; ?> р
                     </td>
                     <td class="rates__time">
-                        <?=humanTime($bet['time']); ?>
+                        <?=humanTime($bet['create_date']); ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
