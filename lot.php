@@ -3,40 +3,75 @@
 session_start();
 
 require_once 'functions.php';
-require_once 'alldata.php';
+
+$connection = dbConnection();
 
 $page404 = false;
 $readyBet = false;
 $errors = [];
 $myBets = [];
-$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$lot = [];
+$lot_id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-if (!empty($_COOKIE['bets'])) {
-    $myBets = json_decode($_COOKIE['bets'], true);
-}
+if (!$connection) {
+    header('HTTP/1.1 500 Internal Server Error');
+    print('Ошибка подключения к базе данных: ' . mysqli_connect_error());
+    die();
+} else {
+    $sql = "SELECT * FROM categories";
+    $categories = getData($connection, $sql);
 
-if (!empty($_POST['cost'])) {
-    if (is_numeric($_POST['cost'])) {
-        $myBets[] = ['lot_id' => $id, 'cost' => $_POST['cost'], 'time' => time()];
+    $sql = "
+    SELECT 
+      lots.id AS id, 
+      lots.name AS name, 
+      description, 
+      start_bet,
+      step_bet,
+      finish_date,
+      image, 
+      categories.name AS category
+    FROM lots
+      JOIN categories ON categories.id = lots.category_id
+    WHERE lots.id = ?";
+    $lot = getData($connection, $sql, [$lot_id]);
 
-        $myBets = json_encode($myBets);
-        setcookie('bets', $myBets, strtotime("+30 days"), "/");
-        header("Location: /mylots.php");
-        exit();
+    $sql = "
+    SELECT 
+      users.name AS name,
+      users.id AS user_id,
+      price,
+      create_date
+      FROM bets 
+      JOIN users ON bets.user_id = users.id
+      WHERE lot_id = ?
+      ORDER BY price DESC";
+    $bets = getData($connection, $sql, [$lot_id]);
+
+    if ($bets) {
+        $price = $bets[0]['price'];
     } else {
-        $errors['cost'] = "Поле заполнено неправильно";
+        $price = $lot[0]['start_bet'];
     }
-}
 
-foreach ($myBets as $myBet) {
-    if ($id == $myBet['lot_id']) {
-        $readyBet = true;
+    if (!empty($_SESSION['user'])) {
+        $user_id = $_SESSION['user']['id'];
+
+        if (!empty($_POST['cost']) && filter_var($_POST['cost'], FILTER_VALIDATE_INT)) {
+            $bet = ['cost' => $_POST['cost'], 'user_id' => $user_id, 'lot_id' => $lot_id];
+
+            $sql = "INSERT INTO bets (`create_date`, `price`, `user_id`, `lot_id`) VALUE (NOW(), ?, ?, ?);";
+            insertData($connection, $sql, $bet);
+
+            header("Location: /mylots.php");
+            exit();
+        }
     }
-}
 
-if (!isset($lots[$id])) {
-    $page404 = true;
-    header("HTTP/1.1 404 Not Found");
+    if (!$lot) {
+        $page404 = true;
+        header("HTTP/1.1 404 Not Found");
+    }
 }
 
 ?>
@@ -45,7 +80,7 @@ if (!isset($lots[$id])) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= $page404 ? '404' : $lots[$id]['lot-name']; ?></title>
+    <title><?= $page404 ? '404' : $lot[0]['name']; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -53,11 +88,17 @@ if (!isset($lots[$id])) {
 
 <?=makeTemplate('templates/header.php', []); ?>
 <?php if (!($page404)) : ?>
-    <?=makeTemplate('templates/main-lot.php', ['bets' => $bets, 'lot' => $lots[$id], 'errors' => $errors, 'readyBet' => $readyBet]); ?>
+    <?=makeTemplate('templates/main-lot.php', [
+        'categories' => $categories,
+        'bets' => $bets,
+        'lot' => $lot,
+        'errors' => $errors,
+        'price' => $price,
+        'readyBet' => $readyBet]); ?>
 <?php else : ?>
     <?=makeTemplate('templates/page404.php', []); ?>
 <?php endif; ?>
-<?=makeTemplate('templates/footer.php', []); ?>
+<?=makeTemplate('templates/footer.php', ['categories' => $categories]); ?>
 
 </body>
 </html>
