@@ -94,7 +94,7 @@ VALUES
   ('2017-05-09 11:00:00', 9500, 1, 3),
   ('2017-05-09 18:00:00', 10000, 2, 3);
 
-INSERT INTO users (reg_date, email, name, password, image, deatils)
+INSERT INTO users (reg_date, email, name, password, image, details)
 VALUES
   ('2017-04-30 12:00:00', 'ignat.v@gmail.com', 'Игнат', '$2y$10$OqvsKHQwr0Wk6FMZDoHo1uHoXd4UdxJG/5UDtUiie00XaxMHrW8ka', '/img/ignat.v.jpg', '+7(987)123-45-67'),
   ('2017-05-01 12:00:00', 'kitty_93@li.ru', 'Леночка', '$2y$10$bWtSjUhwgggtxrnJ7rxmIe63ABubHQs0AS0hgnOo41IEdMHkYoSVa', '/img/kitty_93.jpg', '+7(123)987-65-43'),

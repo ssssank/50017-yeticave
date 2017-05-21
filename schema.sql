@@ -39,7 +39,7 @@ CREATE TABLE users (
 	reg_date DATETIME,
 	email CHAR(64),
 	name CHAR(64),
-	password CHAR(32),
+	password CHAR(64),
 	image CHAR(128),
 	details TEXT
 );
