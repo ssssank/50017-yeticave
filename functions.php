@@ -35,12 +35,17 @@ function humanTime($time)
 function remainTime($time)
 {
     date_default_timezone_set('Europe/Moscow');
-    $tomorrow = strtotime($time);
-    $now = time();
 
-    $remaining_hours = intval(($tomorrow - $now) / 3600);
-    $remaining_minutes = floor((($tomorrow - $now) - (3600 * $remaining_hours)) / 60);
-    $time_remaining = "$remaining_hours".":".str_pad($remaining_minutes, 2, '0', STR_PAD_LEFT);
+    $leftTime = strtotime($time) - time();
+    $remaining_days = floor($leftTime / 86400);
+
+    $leftTime -= $remaining_days * 86400;
+    $remaining_hours = floor($leftTime / 3600);
+
+    $leftTime -= $remaining_hours * 3600;
+    $remaining_minutes = floor($leftTime / 60);
+
+    $time_remaining = "$remaining_days" . "дн " . "$remaining_hours".":".str_pad($remaining_minutes, 2, '0', STR_PAD_LEFT);
 
     return $time_remaining;
 }
@@ -63,7 +68,7 @@ function dbConnection()
     return $connection;
 }
 
-function getData($connection, $sql, $sqlData)
+function getData($connection, $sql, $sqlData = [])
 {
     $resultData = [];
 
