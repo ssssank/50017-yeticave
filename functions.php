@@ -17,7 +17,7 @@ function makeTemplate($templateFile, $templateData)
 
 function humanTime($time)
 {
-    $leftTime = time() - $time;
+    $leftTime = time() - strtotime($time);
     $day = 24 * 60 * 60;
     $hour = 60 * 60;
 
@@ -26,7 +26,7 @@ function humanTime($time)
     } elseif ($leftTime < $day) {
         $time = gmdate("G", $leftTime) . " часов назад";
     } else {
-        $time = gmdate("d.m.y в H:i", $time);
+        $time = gmdate("d.m.y в H:i", strtotime($time));
     }
 
     return $time;
