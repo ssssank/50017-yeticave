@@ -3,10 +3,24 @@
 session_start();
 
 require_once 'functions.php';
-require_once 'userdata.php';
+
+$connection = dbConnection();
 
 $errors = [];
 $user = [];
+
+if (!$connection) {
+    header('HTTP/1.1 500 Internal Server Error');
+    print('Ошибка подключения к базе данных: ' . mysqli_connect_error());
+    die();
+} else {
+    $sql = "SELECT * FROM categories";
+    $categories = getData($connection, $sql);
+
+    $sql = "SELECT id, email, password FROM users";
+
+    $users = getData($connection, $sql);
+}
 
 if (isset($_POST)) {
     foreach ($_POST as $field => $value) {
@@ -44,8 +58,8 @@ if (!empty($_POST)) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-login.php', ['errors' => $errors, 'user' => $user]); ?>
-<?=makeTemplate('templates/footer.php', []);  ?>
+<?=makeTemplate('templates/main-login.php', ['errors' => $errors, 'user' => $user, 'categories' => $categories]); ?>
+<?=makeTemplate('templates/footer.php', ['categories' => $categories]); ?>
 
 </body>
 </html>

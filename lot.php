@@ -42,10 +42,10 @@ if (!$connection) {
       users.id AS user_id,
       price,
       create_date
-      FROM bets 
-      JOIN users ON bets.user_id = users.id
-      WHERE lot_id = ?
-      ORDER BY price DESC";
+    FROM bets 
+    JOIN users ON bets.user_id = users.id
+    WHERE lot_id = ?
+    ORDER BY price DESC";
     $bets = getData($connection, $sql, [$lot_id]);
 
     if ($bets) {
@@ -58,7 +58,7 @@ if (!$connection) {
         $user_id = $_SESSION['user']['id'];
 
         if (!empty($_POST['cost']) && filter_var($_POST['cost'], FILTER_VALIDATE_INT)) {
-            $bet = ['cost' => $_POST['cost'], 'user_id' => 1, 'lot_id' => $lot_id];
+            $bet = ['cost' => $_POST['cost'], 'user_id' => $user_id, 'lot_id' => $lot_id];
 
             $sql = "INSERT INTO bets (`create_date`, `price`, `user_id`, `lot_id`) VALUES (NOW(), ?, ?, ?);";
             insertData($connection, $sql, $bet);

@@ -27,7 +27,7 @@ if (!$connection) {
       JOIN categories ON categories.id = lots.category_id";
     $lot = getData($connection, $sql);
 
-    $sql = "SELECT * FROM bets WHERE USER_id = ?;";
+    $sql = "SELECT * FROM bets WHERE user_id = ? ORDER BY id DESC";
     $user_id = $_SESSION['user']['id'];
 
     $myBets = getData($connection, $sql, [$user_id]);
