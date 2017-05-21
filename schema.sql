@@ -3,7 +3,8 @@ USE yeticave;
 
 CREATE TABLE categories (
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	name CHAR(32)
+	name CHAR(32),
+	en_name CHAR(32)
 );
 
 CREATE UNIQUE INDEX category_name ON categories(name);

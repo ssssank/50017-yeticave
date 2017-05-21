@@ -1,11 +1,11 @@
-INSERT INTO categories (name)
+INSERT INTO categories (name, en_name)
 VALUES
-  ('Доски и лыжи'),
-  ('Крепления'),
-  ('Ботинки'),
-  ('Одежда'),
-  ('Инструменты'),
-  ('Разное');
+  ('Доски и лыжи', 'boards'),
+  ('Крепления', 'attachment'),
+  ('Ботинки', 'boots'),
+  ('Одежда', 'clothing'),
+  ('Инструменты', 'tools'),
+  ('Разное', 'other');
 
 INSERT INTO lots (
   name,
