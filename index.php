@@ -5,6 +5,21 @@ session_start();
 require_once 'functions.php';
 require_once 'alldata.php';
 
+$connection = dbConnection();
+
+$sql = "SELECT name FROM categories";
+$categories = getData($connection, $sql);
+
+$sql = "SELECT lots.name as name, start_bet, image, finish_date, categories.name as category
+FROM lots
+  JOIN categories ON categories.id = category_id
+WHERE finish_date > NOW()
+GROUP BY lots.id
+ORDER BY lots.create_date DESC";
+$lots = getData($connection, $sql);
+
+var_dump($lots);
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -17,7 +32,7 @@ require_once 'alldata.php';
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-index.php', ['categories' => $categories, 'lot' => $lots, 'lot_time_remaining' => remainTime('tomorrow midnight')]); ?>
+<?=makeTemplate('templates/main-index.php', ['categories' => $categories, 'lot' => $lots]); ?>
 <?=makeTemplate('templates/footer.php', []);  ?>
 
 </body>
