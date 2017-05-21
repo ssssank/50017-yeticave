@@ -7,7 +7,7 @@ require_once 'alldata.php';
 
 $connection = dbConnection();
 
-$sql = "SELECT name FROM categories";
+$sql = "SELECT * FROM categories";
 $categories = getData($connection, $sql);
 
 $sql = "SELECT lots.name as name, start_bet, image, finish_date, categories.name as category
@@ -18,7 +18,6 @@ GROUP BY lots.id
 ORDER BY lots.create_date DESC";
 $lots = getData($connection, $sql);
 
-var_dump($lots);
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +32,7 @@ var_dump($lots);
 
 <?=makeTemplate('templates/header.php', []); ?>
 <?=makeTemplate('templates/main-index.php', ['categories' => $categories, 'lot' => $lots]); ?>
-<?=makeTemplate('templates/footer.php', []);  ?>
+<?=makeTemplate('templates/footer.php', ['categories' => $categories]);  ?>
 
 </body>
 </html>
