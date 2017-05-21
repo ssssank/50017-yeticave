@@ -3,7 +3,6 @@
 session_start();
 
 require_once 'functions.php';
-require_once 'alldata.php';
 require_once 'userdata.php';
 
 $errors = [];

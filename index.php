@@ -3,22 +3,26 @@
 session_start();
 
 require_once 'functions.php';
-require_once 'alldata.php';
 
 $connection = dbConnection();
 
-$sql = "SELECT * FROM categories";
-$categories = getData($connection, $sql);
+if (!$connection) {
+    header('HTTP/1.1 500 Internal Server Error');
+    print('Ошибка подключения к базе данных: ' . mysqli_connect_error());
+    die();
+} else {
+    $sql = "SELECT * FROM categories";
+    $categories = getData($connection, $sql);
 
-$sql = "SELECT lots.name as name, start_bet, image, finish_date, categories.name as category
-FROM lots
-  JOIN categories ON categories.id = category_id
-WHERE finish_date > NOW()
-GROUP BY lots.id
-ORDER BY lots.create_date DESC";
-$lots = getData($connection, $sql);
+    $sql = "SELECT lots.id AS id, lots.name AS name, start_bet, image, finish_date, categories.name AS category
+    FROM lots
+      JOIN categories ON categories.id = category_id
+    WHERE finish_date > NOW()
+    GROUP BY lots.id
+    ORDER BY lots.create_date DESC";
+    $lots = getData($connection, $sql);
 
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
