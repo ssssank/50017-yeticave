@@ -50,9 +50,12 @@ function remainTime($time)
     return $time_remaining;
 }
 
-function searchUserByEmail($email, $users)
+function searchUserByEmail($email, $connection)
 {
+    $sql = "SELECT id, name, email, password FROM users";
+    $users = getData($connection, $sql);
     $result = null;
+
     foreach ($users as $user) {
         if ($user['email'] == $email) {
             $result = $user;

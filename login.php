@@ -7,7 +7,7 @@ require_once 'functions.php';
 $connection = dbConnection();
 
 $errors = [];
-$user = [];
+$userFound = [];
 
 if (!$connection) {
     header('HTTP/1.1 500 Internal Server Error');
@@ -16,10 +16,6 @@ if (!$connection) {
 } else {
     $sql = "SELECT * FROM categories";
     $categories = getData($connection, $sql);
-
-    $sql = "SELECT id, email, password FROM users";
-
-    $users = getData($connection, $sql);
 }
 
 if (isset($_POST)) {
@@ -32,7 +28,7 @@ if (isset($_POST)) {
 }
 
 if (!empty($_POST)) {
-    if ($userFound = searchUserByEmail($user['email'], $users)) {
+    if ($userFound = searchUserByEmail($user['email'], $connection)) {
         if (password_verify($user['password'], $userFound['password'])) {
             $_SESSION['user'] = $userFound;
 
@@ -58,7 +54,7 @@ if (!empty($_POST)) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-login.php', ['errors' => $errors, 'user' => $user, 'categories' => $categories]); ?>
+<?=makeTemplate('templates/main-login.php', ['errors' => $errors, 'user' => $userFound, 'categories' => $categories]); ?>
 <?=makeTemplate('templates/footer.php', ['categories' => $categories]); ?>
 
 </body>
