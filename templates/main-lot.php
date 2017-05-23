@@ -9,7 +9,7 @@
         </ul>
     </nav>
     <section class="lot-item container">
-        <?php foreach ($templateData['lot'] as $lot) : ?>
+
         <h2><?=$lot['name']; ?></h2>
         <div class="lot-item__content">
             <div class="lot-item__left">
@@ -58,6 +58,6 @@
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+
     </section>
 </main>

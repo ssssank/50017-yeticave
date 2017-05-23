@@ -10,6 +10,7 @@ $page404 = false;
 $readyBet = false;
 $errors = [];
 $myBets = [];
+$lots = [];
 $lot = [];
 $lot_id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
@@ -34,24 +35,28 @@ if (!$connection) {
     FROM lots
       JOIN categories ON categories.id = lots.category_id
     WHERE lots.id = ?";
-    $lot = getData($connection, $sql, [$lot_id]);
+    $lots = getData($connection, $sql, [$lot_id]);
 
-    $sql = "
-    SELECT 
-      users.name AS name,
-      users.id AS user_id,
-      price,
-      create_date
-    FROM bets 
-    JOIN users ON bets.user_id = users.id
-    WHERE lot_id = ?
-    ORDER BY price DESC";
-    $bets = getData($connection, $sql, [$lot_id]);
+    if (isset($lots[0])) {
+        $lot = $lots[0];
 
-    if ($bets) {
-        $price = $bets[0]['price'];
-    } else {
-        $price = $lot[0]['start_bet'];
+        $sql = "
+        SELECT 
+          users.name AS name,
+          users.id AS user_id,
+          price,
+          create_date
+        FROM bets 
+        JOIN users ON bets.user_id = users.id
+        WHERE lot_id = ?
+        ORDER BY price DESC";
+        $bets = getData($connection, $sql, [$lot_id]);
+
+        if ($bets) {
+            $price = $bets[0]['price'];
+        } else {
+            $price = $lot['start_bet'];
+        }
     }
 
     if (!empty($_SESSION['user'])) {
@@ -80,7 +85,7 @@ if (!$connection) {
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?= $page404 ? '404' : $lot[0]['name']; ?></title>
+    <title><?= $page404 ? '404' : $lot['name']; ?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>

@@ -18,16 +18,18 @@ if (!$connection) {
 
     $sql = "
     SELECT 
-      lots.id AS lot_id, 
-      lots.name AS name, 
-      finish_date,
-      image,
-      categories.name AS category
-    FROM lots
-      JOIN categories ON categories.id = lots.category_id";
-    $lot = getData($connection, $sql);
-
-    $sql = "SELECT * FROM bets WHERE user_id = ? ORDER BY id DESC";
+      bets.lot_id,
+      bets.create_date,
+      bets.user_id,
+      bets.price,
+      lots.name AS name,
+      lots.finish_date,
+      lots.image,      
+      categories.name AS category      
+    FROM bets
+      JOIN lots ON lots.id = bets.lot_id
+      JOIN categories ON categories.id = lots.category_id 
+    WHERE user_id = ?";
     $user_id = $_SESSION['user']['id'];
 
     $myBets = getData($connection, $sql, [$user_id]);
@@ -45,7 +47,7 @@ if (!$connection) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets, 'lot' => $lot, 'categories' => $categories]); ?>
+<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets, 'categories' => $categories]); ?>
 <?=makeTemplate('templates/footer.php', ['categories' => $categories]); ?>
 
 

@@ -2,9 +2,9 @@
 
 include 'mysql_helper.php';
 
-function makeTemplate($templateFile, $templateData)
+function makeTemplate($templateFile, $templateData = [])
 {
-
+    extract($templateData);
     if (file_exists($templateFile)) {
         ob_start();
         require_once $templateFile;
