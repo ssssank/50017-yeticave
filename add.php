@@ -57,40 +57,40 @@ if (!$connection) {
             }
         }
 
-        $owner_id =  $_SESSION['user']['id'];
-        $finish_date = date("Y-m-d H:i:s", strtotime($lot['finish_date']));
+        if (empty($errors)) {
+            $owner_id = $_SESSION['user']['id'];
+            $finish_date = date("Y-m-d H:i:s", strtotime($lot['finish_date']));
 
-        $data = [
-            $lot['lot_name'],
-            $lot['category_id'],
-            $lot['description'],
-            $lot['start_bet'],
-            $lot['step_bet'],
-            $finish_date,
-            $image,
-            $owner_id
-        ];
+            $data = [
+                $lot['lot_name'],
+                $lot['category_id'],
+                $lot['description'],
+                $lot['start_bet'],
+                $lot['step_bet'],
+                $finish_date,
+                $image,
+                $owner_id
+            ];
 
-        var_dump($lot);
+            $sql = "INSERT INTO lots (
+              name, 
+              category_id,
+              description,
+              start_bet,
+              step_bet,
+              finish_date,
+              create_date,
+              image,
+              owner_id
+              )
+            VALUE (?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
 
-        $sql = "INSERT INTO lots (
-          name, 
-          category_id,
-          description,
-          start_bet,
-          step_bet,
-          finish_date,
-          create_date,
-          image,
-          owner_id
-          )
-        VALUE (?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+            $lot_id = insertData($connection, $sql, $data);
 
-        $lot_id = insertData($connection, $sql, $data);
-
-        if ($lot_id) {
-            header("Location: /lot.php?id=" . $lot_id);
-            exit();
+            if ($lot_id) {
+                header("Location: /lot.php?id=" . $lot_id);
+                exit();
+            }
         }
     }
 }
