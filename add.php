@@ -8,14 +8,6 @@ $connection = dbConnection();
 
 $lot = [];
 $errors = [];
-$lot_name = "";
-$category_id = 0;
-$description = "";
-$start_bet = 0;
-$step_bet = 0;
-$finish_date = "";
-$image = "";
-$owner_id = "";
 
 if (!(isset($_SESSION['user']))) {
     header("HTTP/1.1 403 Forbidden");
@@ -55,6 +47,8 @@ if (!$connection) {
                     $errors['image'] = 'Фото должно быть в формате jpeg';
                 }
             }
+        } else {
+            $errors['image'] = 'Фото не загружено';
         }
 
         if (empty($errors)) {

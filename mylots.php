@@ -16,23 +16,25 @@ if (!$connection) {
     $sql = "SELECT * FROM categories";
     $categories = getData($connection, $sql);
 
-    $sql = "
-    SELECT 
-      bets.lot_id,
-      bets.create_date,
-      bets.user_id,
-      bets.price,
-      lots.name AS name,
-      lots.finish_date,
-      lots.image,      
-      categories.name AS category      
-    FROM bets
-      JOIN lots ON lots.id = bets.lot_id
-      JOIN categories ON categories.id = lots.category_id 
-    WHERE user_id = ?";
-    $user_id = $_SESSION['user']['id'];
+    if (isset($_SESSION['user'])) {
+        $sql = "
+        SELECT 
+          bets.lot_id,
+          bets.create_date,
+          bets.user_id,
+          bets.price,
+          lots.name AS name,
+          lots.finish_date,
+          lots.image,      
+          categories.name AS category      
+        FROM bets
+          JOIN lots ON lots.id = bets.lot_id
+          JOIN categories ON categories.id = lots.category_id 
+        WHERE user_id = ?";
+        $user_id = $_SESSION['user']['id'];
 
-    $myBets = getData($connection, $sql, [$user_id]);
+        $myBets = getData($connection, $sql, [$user_id]);
+    }
 }
 
 ?>
@@ -47,7 +49,15 @@ if (!$connection) {
 <body>
 
 <?=makeTemplate('templates/header.php', []); ?>
-<?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets, 'categories' => $categories]); ?>
+
+<?php if (!(isset($_SESSION['user']))) : ?>
+    <?=makeTemplate('templates/page403.php', []); ?>
+
+<?php else : ?>
+    <?=makeTemplate('templates/main-mylots.php', ['bets' => $myBets, 'categories' => $categories]); ?>
+
+<?php endif; ?>
+
 <?=makeTemplate('templates/footer.php', ['categories' => $categories]); ?>
 
 
