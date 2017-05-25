@@ -57,7 +57,7 @@ function searchUserByEmail($email, $connection)
     $result = null;
 
     if ($user[0]) {
-        $result = $user;
+        $result = $user[0];
     }
 
     return $result;
