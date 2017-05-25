@@ -53,15 +53,13 @@ function remainTime($time)
 function searchUserByEmail($email, $connection)
 {
     $sql = "SELECT id, name, email, password, image FROM users WHERE email = ? LIMIT 1";
-    $users = getData($connection, $sql, [$email]);
+    $user = getData($connection, $sql, [$email]);
     $result = null;
 
-    foreach ($users as $user) {
-        if ($user['email'] == $email) {
-            $result = $user;
-            break;
-        }
+    if ($user[0]) {
+        $result = $user;
     }
+
     return $result;
 }
 
